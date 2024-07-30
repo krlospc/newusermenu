@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
 class SessionsController extends Controller
 {
     public function login(Request $request){
-        dd('asdfasdfasdf');
         return view('session.login');
     }
 
@@ -22,9 +22,30 @@ class SessionsController extends Controller
         ]);
         //dd(Hash::make('test'));
         $credentials = $request->only('username', 'password');
-        //dd($credentials);
+        
         if(Auth::attempt($credentials)){
             session()->regenerate();
+            // $users = DB::table('users')->get();
+            $query = "
+                select r.id as rolId, r.rol, p.id as permissionId, p.permission, m.id as menuId, m.menu
+                    from users u 
+                        inner join users_roles ur on (u.id =  ur.user_id )
+                        inner join roles r on (ur.rol_id = r.id)
+                            inner join roles_permissions rp on (r.id = rp.rol_id)
+                              inner join permissions p on (rp.permission_id = p.id)
+                                inner join menus m on (p.menu_id = m.id)                              
+                                where u.username = '".$request->username."';
+
+            ";
+            $objMenu = DB::select(DB::raw($query)->getValue(DB::getQueryGrammar()));
+            $arrMenu = array();
+
+            foreach ($objMenu as $key => $value) {
+                $arrMenu[$value->rol][] = $value->permission;
+            }
+            
+            \Session::put('arrMenu', $arrMenu);
+            
             return redirect('dashboard')->with(['success'=>'You are logged in.']);
         }else{
             // return redirect()->intended('/');
