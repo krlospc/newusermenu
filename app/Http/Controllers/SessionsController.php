@@ -26,7 +26,7 @@ class SessionsController extends Controller
         if(Auth::attempt($credentials)){
             session()->regenerate();
             // $users = DB::table('users')->get();
-            $query = "
+            /*$query = "
                 select r.id as rolId, r.rol, p.id as permissionId, p.permission, m.id as menuId, m.menu
                     from users u 
                         inner join users_roles ur on (u.id =  ur.user_id )
@@ -36,14 +36,28 @@ class SessionsController extends Controller
                                 inner join menus m on (p.menu_id = m.id)                              
                                 where u.username = '".$request->username."';
 
-            ";
+            ";*/
+
+            $query = "
+              select r.id as rolId, r.rol, p.id as permissionId, p.permiso , m.id as menuId, m.menu, p.ruta
+                from users u
+                    inner join usrs_usuarios_roles ur on (u.id = ur.user_id)
+                      inner join usrs_roles r on (ur.usrs_roles_id = r.id)
+                        inner join usrs_roles_permisos rp on (r.id = rp.usrs_roles_id)
+                          inner join usrs_permisos p on (rp.usrs_permisos_id = p.id)
+                            inner join usrs_menus m on (p.usrs_menus_id = m.id)
+                              where u.username = '".$request->username."';
+            ";            
+
+
             $objMenu = DB::select(DB::raw($query)->getValue(DB::getQueryGrammar()));
             $arrMenu = array();
 
             foreach ($objMenu as $key => $value) {
-                $arrMenu[$value->rol][] = $value->permission;
+                $arrMenu[$value->rol][] = ['permiso'=> $value->permiso, 'ruta'=>$value->ruta];
+                
             }
-            
+            //dd($arrMenu);
             \Session::put('arrMenu', $arrMenu);
             
             return redirect('dashboard')->with(['success'=>'You are logged in.']);

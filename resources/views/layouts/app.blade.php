@@ -11,7 +11,7 @@
     <meta name="description"
         content="Flexy Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Flexy Admin Lite Template by WrapPixel</title>
+    <title>OFEP</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/Flexy-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
@@ -28,7 +28,8 @@
 <![endif]-->
 </head>
 
-<body class="g-sidenav-show  bg-gray-100 {{ (\Request::is('rtl') ? 'rtl' : (Request::is('virtual-reality') ? 'virtual-reality' : '')) }} ">
+{{--<body class="g-sidenav-show  bg-gray-100 {{ (\Request::is('rtl') ? 'rtl' : (Request::is('virtual-reality') ? 'virtual-reality' : '')) }} ">--}}
+<body>
   <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
       @auth
         @yield('auth')
@@ -74,7 +75,7 @@
       </script>
 
       <!-- Github buttons -->
-      <script async defer src="https://buttons.github.io/buttons.js"></script>
+      
       <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
       <script src=" {{ asset('assets/js/soft-ui-dashboard.min.js?v=1.0.3') }}"></script>
 

@@ -8,13 +8,10 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
 
-
-
-
-              
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="index.html" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
-                                    class="hide-menu">Dashboard</span></a></li>
+        
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                            href="{{ route('dashboard') }}" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
+                                class="hide-menu">Dashboard</span></a></li>
 
                         
                     @foreach (@session('arrMenu') as $mainItem => $menu)                        
@@ -28,11 +25,11 @@
                             <ul aria-expanded="false" class="collapse first-level">
                             @foreach ($menu as $column => $value)
                               <li class="sidebar-item">
-                                <a href="#" class="sidebar-link">
+                                <a href="{{ route($value['ruta']) }}" class="sidebar-link">
                                   <div class="round-16 d-flex align-items-center justify-content-center">
                                     <i class="ti ti-circle"></i>
                                   </div>
-                                  <span class="hide-menu">{{ $value }}</span>
+                                  <span class="hide-menu">{{ $value['permiso'] }}</span>
                                 </a>
                               </li>
                               @endforeach
