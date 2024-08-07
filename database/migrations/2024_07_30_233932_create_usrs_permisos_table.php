@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('codigo');
             $table->string('permiso');
             $table->string('ruta');
-            $table->unsignedBigInteger('usrs_menus_id');
-            $table->foreign('usrs_menus_id')->references('id')->on('usrs_menus');
+            $table->string('padre_id');
+            $table->string('permiso_tipo');
+            //$table->unsignedBigInteger('usrs_menus_id');
+            //s$table->foreign('usrs_menus_id')->references('id')->on('usrs_menus');
             $table->timestamps();
         });
     }

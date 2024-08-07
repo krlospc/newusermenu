@@ -39,18 +39,19 @@ class SessionsController extends Controller
             ";*/
 
             $query = "
-              select r.id as rolId, r.rol, p.id as permissionId, p.permiso , m.id as menuId, m.menu, p.ruta
+              select r.id as rolId, r.rol, p.id as permissionId, p.permiso, p.ruta -- , m.id as menuId, m.menu
                 from users u
                     inner join usrs_usuarios_roles ur on (u.id = ur.user_id)
                       inner join usrs_roles r on (ur.usrs_roles_id = r.id)
                         inner join usrs_roles_permisos rp on (r.id = rp.usrs_roles_id)
                           inner join usrs_permisos p on (rp.usrs_permisos_id = p.id)
-                            inner join usrs_menus m on (p.usrs_menus_id = m.id)
+                            -- inner join usrs_menus m on (p.usrs_menus_id = m.id)
                               where u.username = '".$request->username."';
             ";            
 
 
             $objMenu = DB::select(DB::raw($query)->getValue(DB::getQueryGrammar()));
+            
             $arrMenu = array();
 
             foreach ($objMenu as $key => $value) {

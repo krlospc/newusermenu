@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('dashboard');
 	})->name('dashboard');
 
+	Route::get('/mainusers', ["users/UserController::class", 'index'])->name('user-prin');
+
 	Route::get('users', function () {
 		return view('users');
 	})->name('users-main');

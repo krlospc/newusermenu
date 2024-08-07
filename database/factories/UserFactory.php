@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+use App\Models\UsrsPersonas;
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
@@ -24,10 +26,13 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            // 'name' => fake()->name(),
+            // 'username' => fake()->randomElement(['homer','lisa','bart','march','maggy']),
+            'username' => fake()->regexify('[e-g]{5}'),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => static::$password ??= Hash::make('test'),
+            'usrs_personas_id' => UsrsPersonas::all()->random()->id,
             'remember_token' => Str::random(10),
         ];
     }

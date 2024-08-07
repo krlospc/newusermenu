@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\UsrsPersonas;
+use App\Models\UsrsRolesPermisos;
+use App\Models\UsrsUsuariosRoles;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,11 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        UsrsPersonas::factory(5)->create();
+        User::factory(3)->create();
+        $this->call(UsrsRolesTableSeeder::class);
+        $this->call(UsrsPermisosSeeder::class);
+        UsrsRolesPermisos::factory(5)->create();
+        UsrsUsuariosRoles::factory(5)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
     }
 }
